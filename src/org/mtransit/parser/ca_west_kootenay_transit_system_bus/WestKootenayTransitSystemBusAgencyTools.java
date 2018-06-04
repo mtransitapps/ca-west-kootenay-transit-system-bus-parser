@@ -153,6 +153,7 @@ public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools 
 		return super.getRouteColor(gRoute);
 	}
 
+	private static final String COMMUNITY_COMPLEX = "Comm Complex";
 	private static final String TRAIL = "Trail";
 
 	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
@@ -254,6 +255,100 @@ public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools 
 						"160376", // Northbound Ward St at Baker St
 								"560082", // ++
 								"160379", // Westbound Lakeside Dr at Airport
+						})) //
+				.compileBothTripSort());
+		map2.put(14L, new RouteTripSpec(14L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, "Downtown", //
+				1, MTrip.HEADSIGN_TYPE_STRING, "Blewett") //
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"560011", // Blewett at Marrello
+								"560014", // ++
+								"160376", // Northbound Ward St at Baker St (Downtown Nelson)
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"160376", // Northbound Ward St at Baker St (Downtown Nelson)
+								"160282", // ==
+								"160511", // !=
+								"160462", // == Westbound Hwy 3A/6 at 1600 Block
+								"560093", // != Southbound Hwy 3A & 6 at Pacific Insight Corp
+								"560008", // != Westbound Granite at Blewett
+								"560009", // == Westbound Blewett at Bedford
+								"560011", // Blewett at Marrello
+						})) //
+				.compileBothTripSort());
+		map2.put(15L, new RouteTripSpec(15L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, "Downtown", //
+				1, MTrip.HEADSIGN_TYPE_STRING, "Perrier") //
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"560015", // Southbound Perrier Rd
+								"160291", // ++
+								"160376", // Northbound Ward St at Baker St (Downtown Nelson)
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"160376", // Northbound Ward St at Baker St (Downtown Nelson)
+								"160292", // ++
+								"560015", // Southbound Perrier Rd
+						})) //
+				.compileBothTripSort());
+		map2.put(34L, new RouteTripSpec(34L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, COMMUNITY_COMPLEX, //
+				1, MTrip.HEADSIGN_TYPE_STRING, "Kinnaird") //
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"160246", // Northbound 14th at Meadowbrook #KinnairdPark
+								"160268", // ++
+								"160247", // Northbound 6th at 20th St #CommComplex
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"160247", // Northbound 6th at 20th St #CommComplex
+								"160252", // == Southbound 5th at 32nd St
+								"160266", // != Southbound 9th at 35th St #SouthRdg
+								"160028", // != Southbound 14th at 37th St #SouthRdg
+								"160260", // == Northbound Columbia at 32nd St
+								"160246", // Northbound 14th at Meadowbrook #KinnairdPark
+						})) //
+				.compileBothTripSort());
+		map2.put(36L, new RouteTripSpec(36L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, COMMUNITY_COMPLEX, //
+				1, MTrip.HEADSIGN_TYPE_STRING, "Bridgeview Cr") //
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"160243", // Southbound Bridgeview at Lawrence
+								"160390", // ==
+								"160002", // != Westbound Selkirk College =>
+								"160348", // !=
+								"160247", // != Northbound 6th at 20th St #CommComplex =>
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"160247", // != Northbound 6th at 20th St #CommComplex <=
+								"160002", // != Westbound Selkirk College <=
+								"160257", // !=
+								"160242", // ==
+								"160243", // Southbound Bridgeview at Lawrence
+						})) //
+				.compileBothTripSort());
+		map2.put(38L, new RouteTripSpec(38L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, "Downtown", // Castlegar: City Hall
+				1, MTrip.HEADSIGN_TYPE_STRING, "Playmor") //
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"160468", // Northbound Osachoff at White #PlaymorJunction
+								"160470", // Westbound Hwy 3A at Kelly
+								"160384", // Westbound Hwy 3A at Rosedale
+								"160015", // Northbound Columbia 1500 block
+								"160221", // Southbound Columbia at 4th St #Downtown
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"560000", // Northbound Columbia at 4th #Downtown
+								"160562", // Southbound Hwy 6 at 1200 Block
+								"160468", // Northbound Osachoff at White #PlaymorJunction
 						})) //
 				.compileBothTripSort());
 		map2.put(48L, new RouteTripSpec(48L, //
@@ -371,10 +466,10 @@ public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools 
 		} else if (mTrip.getRouteId() == 32L) {
 			if (Arrays.asList( //
 					"31 N Castlegar", //
-					"31 Comm Complex", //
-					"Comm Complex" //
-			).containsAll(headsignsValues)) {
-				mTrip.setHeadsignString("Comm Complex", mTrip.getHeadsignId());
+					"31 " + COMMUNITY_COMPLEX, //
+					COMMUNITY_COMPLEX //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(COMMUNITY_COMPLEX, mTrip.getHeadsignId());
 				return true;
 			} else if (Arrays.asList( //
 					"Celgar Only", //
@@ -387,9 +482,9 @@ public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools 
 		} else if (mTrip.getRouteId() == 33L) {
 			if (Arrays.asList( //
 					"98 " + TRAIL, //
-					"Comm Complex" //
-			).containsAll(headsignsValues)) {
-				mTrip.setHeadsignString("Comm Complex", mTrip.getHeadsignId());
+					COMMUNITY_COMPLEX //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(COMMUNITY_COMPLEX, mTrip.getHeadsignId());
 				return true;
 			} else if (Arrays.asList( //
 					"36 Ootischenia", //
@@ -401,7 +496,7 @@ public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools 
 		} else if (mTrip.getRouteId() == 36L) {
 			if (Arrays.asList( //
 					"Selkirk Coll", //
-					"Comm Complex", //
+					COMMUNITY_COMPLEX, //
 					"Ootischenia" // ++
 			).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString("Ootischenia", mTrip.getHeadsignId()); // Comm Complex / Selkirk Coll
