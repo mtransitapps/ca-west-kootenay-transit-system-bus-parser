@@ -1,0 +1,17 @@
+apply plugin: 'application'
+
+mainClassName = file('parser_class').text
+applicationDefaultJvmArgs = ["-Dfile.encoding=UTF-8"]
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+        output.classesDir = 'bin'
+    }
+}
+
+dependencies {
+    compile project(':parser')
+}
