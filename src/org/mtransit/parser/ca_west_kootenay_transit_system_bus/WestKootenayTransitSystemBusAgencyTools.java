@@ -153,9 +153,93 @@ public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools 
 		return super.getRouteColor(gRoute);
 	}
 
+	private static final String TRAIL = "Trail";
+
 	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
 	static {
 		HashMap<Long, RouteTripSpec> map2 = new HashMap<Long, RouteTripSpec>();
+		map2.put(1L, new RouteTripSpec(1L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, "Downtown", // North
+				1, MTrip.HEADSIGN_TYPE_STRING, "Uphill") // South
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"160297", // Southbound Stanley St at Hart St #HS <=
+								"160305", // Westbound Robson St at Josephine St (Trafalgar Middle School)
+								"160281", // ==
+								"160300", // <=
+								"160340", // ==
+								"160313", // == Westbound View St at Pine St (Kootenay Lake Hospital)
+								"160341", // != Southbound Hendryx St at Mill St
+								"160301", // != Westbound Latimer St at Josephine St
+								"160325", // != Eastbound Cottonwood St at 5th St
+								"160323", // != Eastbound Cottonwood St at 7th St
+								"160376", // == Northbound Ward St at Baker St (Downtown Nelson)
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"160376", // Northbound Ward St at Baker St (Downtown Nelson)
+								"160292", // ==
+								"160300", // != =>
+								"160293", // !=
+								"160297", // Southbound Stanley St at Hart St #HS =>
+						})) //
+				.compileBothTripSort());
+		map2.put(2L, new RouteTripSpec(2L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, "Downtown", // West
+				1, MTrip.HEADSIGN_TYPE_STRING, "Fairview") // East
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"160359", // == Northbound 10th St at Kokanee (Selkirk College) <=
+								"160339", // == Westbound Fell St at 9th St <=
+								"160338", // ==
+								"160335", // ==
+								"160324", // != Westbound Cottonwood St at 7th St (LV Rogers Secondary School)
+								"160327", // !=
+								"160395", // Southbound Gordon at Lakeside #NR
+								"160515", // ==
+								"160378", // != xx Eastbound Lakeside at Poplar St (Chahko Miko Mall)
+								"160351", // ==
+								"160376", // == Northbound Ward St at Baker St (Downtown Nelson)
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"160376", // == Northbound Ward St at Baker St (Downtown Nelson)
+								"160358", // ==
+								"160350", // ==
+								"160378", // != xx Eastbound Lakeside at Poplar St (Chahko Miko Mall)
+								"160342", // == Northbound Front St at Poplar St
+								"160318", // != Northbound Nelson at Behnsen St
+								"160323", // != Eastbound Cottonwood St at 7th St (LV Rogers Secondary School)
+								"160391", // != Northbound 1st St at Anderson St
+								"160329", // != Eastbound Gordon St at 3rd St
+								"160336", // == Northbound 8th St at Davies St
+								"160359", // == Northbound 10th St at Kokanee (Selkirk College) =>
+								"160013", // != Eastbound 11th St (Mountain Lake Seniors Community Ltd) =>
+						})) //
+				.compileBothTripSort());
+		map2.put(3L, new RouteTripSpec(3L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, "Downtown", //
+				1, MTrip.HEADSIGN_TYPE_STRING, "Rosemont") //
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"160311", // Northbound Silver King at Tower (Selkirk College)
+								"160302", // == Northbound Hall Mines at Hoover St
+								"160291", // !=
+								"160376", // Northbound Ward St at Baker St =>
+								"160293", // !=
+								"160297", // Southbound Stanley St at Hart St #HS =>
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"160376", // Northbound Ward St at Baker St (Downtown Nelson)
+								"160279", // ==
+								"160278", // !=
+								"160275", // Westbound W Innes St at Crease #CI
+								"160368", // !=
+								"160310", // ==
+								"160311", // Northbound Silver King at Tower (Selkirk College)
+						})) //
+				.compileBothTripSort());
 		map2.put(4L, new RouteTripSpec(4L, //
 				0, MTrip.HEADSIGN_TYPE_STRING, "Downtown", //
 				1, MTrip.HEADSIGN_TYPE_STRING, "Nelson Airport") //
@@ -232,19 +316,141 @@ public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools 
 	private static final Pattern CLEAN_P2 = Pattern.compile("[\\s]*\\)[\\s]*");
 	private static final String CLEAN_P2_REPLACEMENT = ") ";
 
+	private static final Pattern STARTS_WITH_VIA_SLASH = Pattern.compile("(( \\/)? via .*$)", Pattern.CASE_INSENSITIVE);
+	private static final Pattern STARTS_WITH_TO_SLASH = Pattern.compile("(^.* \\/ (to )?)", Pattern.CASE_INSENSITIVE);
+
+	private static final Pattern KEEP_TRAIL = Pattern.compile(String.format("((^|\\W){1}(%s)(\\W|$){1})", "trl"), Pattern.CASE_INSENSITIVE);
+	private static final String KEEP_TRAIL_REPLACEMENT = String.format("$2%s$4", TRAIL);
+
 	@Override
 	public String cleanTripHeadsign(String tripHeadsign) {
+		tripHeadsign = STARTS_WITH_VIA_SLASH.matcher(tripHeadsign).replaceAll(StringUtils.EMPTY); // 1st
+		tripHeadsign = STARTS_WITH_TO_SLASH.matcher(tripHeadsign).replaceAll(StringUtils.EMPTY); // 2nd
 		tripHeadsign = CleanUtils.CLEAN_AND.matcher(tripHeadsign).replaceAll(CleanUtils.CLEAN_AND_REPLACEMENT);
 		tripHeadsign = CLEAN_P1.matcher(tripHeadsign).replaceAll(CLEAN_P1_REPLACEMENT);
 		tripHeadsign = CLEAN_P2.matcher(tripHeadsign).replaceAll(CLEAN_P2_REPLACEMENT);
-		tripHeadsign = CleanUtils.cleanStreetTypes(tripHeadsign);
+		tripHeadsign = CleanUtils.cleanStreetTypes(tripHeadsign); // 1st
+		tripHeadsign = KEEP_TRAIL.matcher(tripHeadsign).replaceAll(KEEP_TRAIL_REPLACEMENT); // 2nd
 		tripHeadsign = CleanUtils.cleanNumbers(tripHeadsign);
 		return CleanUtils.cleanLabel(tripHeadsign);
 	}
 
 	@Override
 	public boolean mergeHeadsign(MTrip mTrip, MTrip mTripToMerge) {
-		return mTrip.mergeHeadsignValue(mTripToMerge);
+		List<String> headsignsValues = Arrays.asList(mTrip.getHeadsignValue(), mTripToMerge.getHeadsignValue());
+		if (mTrip.getRouteId() == 10L) {
+			if (Arrays.asList( //
+					"6 Mile Only", //
+					"Balfour" //
+			).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString("Balfour", mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 20L) {
+			if (Arrays.asList( //
+					"Slocan & Perry's", //
+					"Slocan City" //
+			).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString("Slocan City", mTrip.getHeadsignId()); // SLOCAN VALLEY
+				return true;
+			} else if (Arrays.asList( //
+					"Playmor & Perry's", //
+					"Playmor Jct" //
+			).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString("Playmor Jct", mTrip.getHeadsignId()); // NELSON
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 31L) {
+			if (Arrays.asList( //
+					"32 Columbia", //
+					"Downtown" //
+			).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString("Downtown", mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 32L) {
+			if (Arrays.asList( //
+					"31 N Castlegar", //
+					"31 Comm Complex", //
+					"Comm Complex" //
+			).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString("Comm Complex", mTrip.getHeadsignId());
+				return true;
+			} else if (Arrays.asList( //
+					"Celgar Only", //
+					"Celgar & Robson", //
+					"Robson" //
+			).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString("Robson", mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 33L) {
+			if (Arrays.asList( //
+					"98 " + TRAIL, //
+					"Comm Complex" //
+			).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString("Comm Complex", mTrip.getHeadsignId());
+				return true;
+			} else if (Arrays.asList( //
+					"36 Ootischenia", //
+					"Selkirk Coll" //
+			).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString("Selkirk Coll", mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 36L) {
+			if (Arrays.asList( //
+					"Selkirk Coll", //
+					"Comm Complex", //
+					"Ootischenia" // ++
+			).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString("Ootischenia", mTrip.getHeadsignId()); // Comm Complex / Selkirk Coll
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 43L) {
+			if (Arrays.asList( //
+					"Waneta Only", //
+					TRAIL //
+					).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString(TRAIL, mTrip.getHeadsignId()); // DOWNTOWN
+				return true;
+			} else if (Arrays.asList( //
+					"Waneta/Walmart", //
+					"Fruitvale" //
+			).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString("Fruitvale", mTrip.getHeadsignId()); // GLENMERRY/FRUITVALE
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 44L) {
+			if (Arrays.asList( //
+					"KBR Hosp Only", //
+					TRAIL, //
+					"Sunningdale" //
+			).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString("Sunningdale", mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 76L) {
+			if (Arrays.asList( //
+					"Balfour Only", //
+					"Nelson" //
+			).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString("Nelson", mTrip.getHeadsignId());
+				return true;
+			}
+		} else if (mTrip.getRouteId() == 99L) {
+			if (Arrays.asList( //
+					"20 Slocan Vly", //
+					"Playmor Jct", //
+					"Selk Coll - C'gar" //
+			).containsAll(headsignsValues)) {
+				mTrip.setHeadsignString("Selk Coll - C'gar", mTrip.getHeadsignId());
+				return true;
+			}
+		}
+		System.out.printf("\nUnexpected trips to merge %s & %s!\n", mTrip, mTripToMerge);
+		System.exit(-1);
+		return false;
 	}
 
 	private static final Pattern STARTS_WITH_BOUND = Pattern.compile("(^(east|west|north|south)bound)", Pattern.CASE_INSENSITIVE);
@@ -254,7 +460,8 @@ public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools 
 		gStopName = STARTS_WITH_BOUND.matcher(gStopName).replaceAll(StringUtils.EMPTY);
 		gStopName = CleanUtils.CLEAN_AT.matcher(gStopName).replaceAll(CleanUtils.CLEAN_AT_REPLACEMENT);
 		gStopName = EXCHANGE.matcher(gStopName).replaceAll(EXCHANGE_REPLACEMENT);
-		gStopName = CleanUtils.cleanStreetTypes(gStopName);
+		gStopName = CleanUtils.cleanStreetTypes(gStopName); // 1st
+		gStopName = KEEP_TRAIL.matcher(gStopName).replaceAll(KEEP_TRAIL_REPLACEMENT); // 2nd
 		gStopName = CleanUtils.cleanNumbers(gStopName);
 		return CleanUtils.cleanLabel(gStopName);
 	}
