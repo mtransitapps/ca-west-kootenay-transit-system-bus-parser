@@ -351,6 +351,68 @@ public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools 
 								"160468", // Northbound Osachoff at White #PlaymorJunction
 						})) //
 				.compileBothTripSort());
+		map2.put(41L, new RouteTripSpec(41L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, "Cedar & Spokane", // Downtown
+				1, MTrip.HEADSIGN_TYPE_STRING, "Nelson & Birch") //
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"160024", // Nelson at Lookout St (Nelson and Birch)
+								"160025", // ++
+								"160087", // Northbound Cedar at Spokane St
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"160087", // Northbound Cedar at Spokane St
+								"160080", // ++
+								"160024", // Nelson at Lookout St (Nelson and Birch)
+						})) //
+				.compileBothTripSort());
+		map2.put(44L, new RouteTripSpec(44L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, "Cedar & Spokane", // Downtown
+				1, MTrip.HEADSIGN_TYPE_STRING, "Sunningdale") // KBR Hospital
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"160148", // Northbound Hillside at Viola
+								"160109", // != ==
+								"160041", // <>
+								"160048", // <>
+								"160042", // <> Eastbound Hospital Bench 1200 Block
+								"160117", // <>
+								"160107", // != ==
+								"160087", // Northbound Cedar at Spokane St
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"160087", // Northbound Cedar at Spokane St
+								"160106", // !=
+								"160041", // <>
+								"160048", // <>
+								"160042", // <> Eastbound Hospital Bench 1200 Block
+								"160117", // <>
+								"160108", // !=
+								"160148", // Northbound Hillside at Viola
+						})) //
+				.compileBothTripSort());
+		map2.put(45L, new RouteTripSpec(45L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, "Cedar & Spokane", // Downtown
+				1, MTrip.HEADSIGN_TYPE_STRING, "Warfield Plant") // Teck
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"160030", // == Warfield Plant
+								"560140", // != <> Teck
+								"160140", // != <>
+								"160025", // ==
+								"160087", // Northbound Cedar at Spokane St
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"160087", // Northbound Cedar at Spokane St
+								"160022", // ==
+								"560140", // <> Teck
+								"160140", // <>
+								"160030", // == Warfield Plant
+						})) //
+				.compileBothTripSort());
 		map2.put(48L, new RouteTripSpec(48L, //
 				0, MTrip.HEADSIGN_TYPE_STRING, "Fruitvale", // Trail / Fruitvale
 				1, MTrip.HEADSIGN_TYPE_STRING, "Red Mountain") //
@@ -365,6 +427,60 @@ public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools 
 						"160031", // Northbound Kootenay Ave N at Pole Yard
 								"160188", // ++
 								"160038", // Red Mountain Resort
+						})) //
+				.compileBothTripSort());
+		map2.put(51L, new RouteTripSpec(51L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, "Nakusp", //
+				1, MTrip.HEADSIGN_TYPE_STRING, "Hot Spgs") //
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"560050", // Northbound Hotsprings Rd
+								"160206", // Southbound 6th W at 2nd E
+								"160207", // Eastbound Broadway St W at 7th Ave SW
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"160207", // Eastbound Broadway St W at 7th Ave SW
+								"160207", // ++
+								"560050", // ++
+								"560050", // Northbound Hotsprings Rd
+						})) //
+				.compileBothTripSort());
+		map2.put(57L, new RouteTripSpec(57L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, "Seniors Hall", // Kaslo
+				1, MTrip.HEADSIGN_TYPE_STRING, "Shutty Bench") //
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"560022", // Northbound Hwy 31 at Shutty Bench Rd (Shutty Bench)
+								"560023", // ++
+								"560021", // Westbound A Ave (Seniors Hall)
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"560021", // Westbound A Ave (Seniors Hall)
+								"560021", // ++
+								"560022", // ++
+								"560022", // Northbound Hwy 31 at Shutty Bench Rd (Shutty Bench)
+						})) //
+				.compileBothTripSort());
+		map2.put(58L, new RouteTripSpec(58L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, "Kaslo", //
+				1, MTrip.HEADSIGN_TYPE_STRING, "Argenta") //
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"560048", // Highway 31 at Duncan Dam Lookout Rd (Argenta)
+								"560067", // ==
+								"560069", // != <> Southbound Argenta Johnsons Landing Rd
+								"560088", // ==
+								"560021", // Westbound A Ave (Kaslo)
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"560021", // Westbound A Ave (Kaslo)
+								"560022", // ==
+								"560069", // != <> Southbound Argenta Johnsons Landing Rd
+								"560068", // ==
+								"560048", // Highway 31 at Duncan Dam Lookout Rd (Argenta)
 						})) //
 				.compileBothTripSort());
 		ALL_ROUTE_TRIPS2 = map2;
