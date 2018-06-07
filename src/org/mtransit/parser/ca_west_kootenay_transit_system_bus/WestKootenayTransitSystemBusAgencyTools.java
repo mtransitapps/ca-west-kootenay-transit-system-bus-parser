@@ -153,6 +153,7 @@ public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools 
 		return super.getRouteColor(gRoute);
 	}
 
+	private static final String SLASH = " / ";
 	private static final String COMMUNITY_COMPLEX = "Comm Complex";
 	private static final String TRAIL = "Trail";
 
@@ -367,6 +368,22 @@ public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools 
 								"160024", // Nelson at Lookout St (Nelson and Birch)
 						})) //
 				.compileBothTripSort());
+		map2.put(42L, new RouteTripSpec(42L, //
+				0, MTrip.HEADSIGN_TYPE_STRING, "Cedar & Spokane", // Downtown
+				1, MTrip.HEADSIGN_TYPE_STRING, "Daniel & End") //
+				.addTripSort(0, //
+						Arrays.asList(new String[] { //
+						"160092", // Westbound Daniel St at End
+								"160085", // ++
+								"160087", // Northbound Cedar at Spokane St
+						})) //
+				.addTripSort(1, //
+						Arrays.asList(new String[] { //
+						"160087", // Northbound Cedar at Spokane St
+								"160096", // ++
+								"160092", // Westbound Daniel St at End
+						})) //
+				.compileBothTripSort());
 		map2.put(44L, new RouteTripSpec(44L, //
 				0, MTrip.HEADSIGN_TYPE_STRING, "Cedar & Spokane", // Downtown
 				1, MTrip.HEADSIGN_TYPE_STRING, "Sunningdale") // KBR Hospital
@@ -542,6 +559,7 @@ public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools 
 		tripHeadsign = CLEAN_P2.matcher(tripHeadsign).replaceAll(CLEAN_P2_REPLACEMENT);
 		tripHeadsign = CleanUtils.cleanStreetTypes(tripHeadsign); // 1st
 		tripHeadsign = KEEP_TRAIL.matcher(tripHeadsign).replaceAll(KEEP_TRAIL_REPLACEMENT); // 2nd
+		tripHeadsign = CleanUtils.cleanSlashes(tripHeadsign);
 		tripHeadsign = CleanUtils.cleanNumbers(tripHeadsign);
 		return CleanUtils.cleanLabel(tripHeadsign);
 	}
@@ -623,10 +641,10 @@ public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools 
 					"Waneta Only", //
 					TRAIL //
 					).containsAll(headsignsValues)) {
-				mTrip.setHeadsignString(TRAIL, mTrip.getHeadsignId()); // DOWNTOWN
+				mTrip.setHeadsignString(TRAIL, mTrip.getHeadsignId()); // DOWNTOWN (Cedar & Spokane)
 				return true;
 			} else if (Arrays.asList( //
-					"Waneta/Walmart", //
+					"Waneta" + SLASH + "Walmart", //
 					"Fruitvale" //
 			).containsAll(headsignsValues)) {
 				mTrip.setHeadsignString("Fruitvale", mTrip.getHeadsignId()); // GLENMERRY/FRUITVALE
