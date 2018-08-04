@@ -10,7 +10,7 @@ if [ $STATUS == 1 ]; then STATUS=0; fi; # grep returns 1 when no result
 checkResult $STATUS false;
 git -C $TARGET diff res/values/gtfs_rts_values_gen.xml;
 checkResult $?;
-RESULT=$(git -C $TARGET diff-index  --name-only HEAD -- "res/raw" | wc -l);
+RESULT=$(git -C $TARGET diff-index --name-only HEAD -- "res/raw" | wc -l);
 if [ "$RESULT" -gt 0 ]; then
 	echo "> SCHEDULE CHANGED > MANUAL FIX!";
 	git -C $TARGET status | grep "res/raw" | head -n 7;
@@ -18,7 +18,7 @@ if [ "$RESULT" -gt 0 ]; then
 fi
 git -C $TARGET diff res-current/values/current_gtfs_rts_values_gen.xml;
 checkResult $?;
-RESULT=$(git -C $TARGET diff-index  --name-only HEAD -- "res-current/raw" | wc -l);
+RESULT=$(git -C $TARGET diff-index --name-only HEAD -- "res-current/raw" | wc -l);
 if [ "$RESULT" -gt 0 ]; then
 	echo "> SCHEDULE CHANGED > MANUAL FIX!";
 	git -C $TARGET status | grep "res-current/raw" | head -n 7;
@@ -26,12 +26,12 @@ if [ "$RESULT" -gt 0 ]; then
 fi
 if [ -d $TARGET/res-next ]; then
 	git -C $TARGET status | grep "res-next" | head -n 1;
-	if [ -d $TARGET/res-next/values ]; then
+	if [ -d $TARGET/res-next/values/next_gtfs_rts_values_gen.xml ]; then
 		git -C $TARGET diff res-next/values/next_gtfs_rts_values_gen.xml;
 		checkResult $?;
 	fi
 	if [ -d $TARGET/res-next/raw ]; then
-		RESULT=$(git -C $TARGET diff-index  --name-only HEAD -- "res-next/raw" | wc -l);
+		RESULT=$(git -C $TARGET diff-index --name-only HEAD -- "res-next/raw" | wc -l);
 		if [ "$RESULT" -gt 0 ]; then
 			echo "> SCHEDULE CHANGED > MANUAL FIX!";
 			git -C $TARGET status | grep "res-next/raw" | head -n 7;
