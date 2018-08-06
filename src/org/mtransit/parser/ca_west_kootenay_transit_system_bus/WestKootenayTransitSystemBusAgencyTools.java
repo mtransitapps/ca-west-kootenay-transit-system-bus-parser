@@ -197,6 +197,7 @@ public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools 
 				.addTripSort(0, //
 						Arrays.asList(new String[] { //
 						"160359", // == Northbound 10th St at Kokanee (Selkirk College) <=
+								"160013", // !=
 								"160339", // == Westbound Fell St at 9th St <=
 								"160338", // ==
 								"160335", // ==
@@ -206,6 +207,8 @@ public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools 
 								"160515", // ==
 								"160378", // != xx Eastbound Lakeside at Poplar St (Chahko Miko Mall)
 								"160351", // ==
+								"160304", // !=
+								"160281", // !=
 								"160376", // == Northbound Ward St at Baker St (Downtown Nelson)
 						})) //
 				.addTripSort(1, //
@@ -344,17 +347,17 @@ public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools 
 				1, MTrip.HEADSIGN_TYPE_STRING, "Playmor") //
 				.addTripSort(0, //
 						Arrays.asList(new String[] { //
-						"160468", // Northbound Osachoff at White #PlaymorJunction
-								"160470", // Westbound Hwy 3A at Kelly
-								"160384", // Westbound Hwy 3A at Rosedale
-								"160015", // Northbound Columbia 1500 block
-								"160221", // Southbound Columbia at 4th St #Downtown
+						"160468", // Osachoff at White #PlaymorJunction
+								"160470", // Hwy 3A at Kelly
+								"160384", // Hwy 3A at Rosedale
+								"160015", // Columbia 1500 block
+								"160221", // Columbia at 4th St #Downtown
 						})) //
 				.addTripSort(1, //
 						Arrays.asList(new String[] { //
-						"560000", // Northbound Columbia at 4th #Downtown
-								"160562", // Southbound Hwy 6 at 1200 Block
-								"160468", // Northbound Osachoff at White #PlaymorJunction
+						"160221", // Columbia at 4th St
+								"160562", // Hwy 6 at 1200 Block
+								"160468", // Osachoff at White #PlaymorJunction
 						})) //
 				.compileBothTripSort());
 		map2.put(41L, new RouteTripSpec(41L, //
@@ -552,6 +555,8 @@ public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools 
 	private static final Pattern STARTS_WITH_VIA_SLASH = Pattern.compile("(( \\/)? via .*$)", Pattern.CASE_INSENSITIVE);
 	private static final Pattern STARTS_WITH_TO_SLASH = Pattern.compile("(^.* \\/ (to )?)", Pattern.CASE_INSENSITIVE);
 
+	private static final Pattern STARTS_WITH_TO = Pattern.compile("(^to )", Pattern.CASE_INSENSITIVE);
+
 	private static final Pattern KEEP_TRAIL = Pattern.compile(String.format("((^|\\W){1}(%s)(\\W|$){1})", "trl"), Pattern.CASE_INSENSITIVE);
 	private static final String KEEP_TRAIL_REPLACEMENT = String.format("$2%s$4", TRAIL);
 
@@ -559,6 +564,7 @@ public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools 
 	public String cleanTripHeadsign(String tripHeadsign) {
 		tripHeadsign = STARTS_WITH_VIA_SLASH.matcher(tripHeadsign).replaceAll(StringUtils.EMPTY); // 1st
 		tripHeadsign = STARTS_WITH_TO_SLASH.matcher(tripHeadsign).replaceAll(StringUtils.EMPTY); // 2nd
+		tripHeadsign = STARTS_WITH_TO.matcher(tripHeadsign).replaceAll(StringUtils.EMPTY);
 		tripHeadsign = CleanUtils.CLEAN_AND.matcher(tripHeadsign).replaceAll(CleanUtils.CLEAN_AND_REPLACEMENT);
 		tripHeadsign = CLEAN_P1.matcher(tripHeadsign).replaceAll(CLEAN_P1_REPLACEMENT);
 		tripHeadsign = CLEAN_P2.matcher(tripHeadsign).replaceAll(CLEAN_P2_REPLACEMENT);
