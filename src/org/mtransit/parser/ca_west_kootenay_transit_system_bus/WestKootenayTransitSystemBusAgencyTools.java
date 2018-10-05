@@ -26,8 +26,8 @@ import org.mtransit.parser.mt.data.MRoute;
 import org.mtransit.parser.mt.data.MTrip;
 import org.mtransit.parser.mt.data.MTripStop;
 
-// https://bctransit.com/*/footer/open-data
-// https://bctransit.com/servlet/bctransit/data/GTFS - West Kootenay
+// https://www.bctransit.com/open-data
+// https://www.bctransit.com/data/gtfs/west-kootenay.zip
 public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	public static void main(String[] args) {
