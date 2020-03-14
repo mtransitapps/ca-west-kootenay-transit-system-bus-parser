@@ -196,35 +196,41 @@ public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools 
 				1, MTrip.HEADSIGN_TYPE_STRING, "Fairview") // East
 				.addTripSort(0, //
 						Arrays.asList(new String[] { //
-						"160359", // == Northbound 10th St at Kokanee (Selkirk College) <=
-								"160013", // !=
-								"160339", // == Westbound Fell St at 9th St <=
-								"160338", // ==
-								"160335", // ==
-								"160324", // != Westbound Cottonwood St at 7th St (LV Rogers Secondary School)
-								"160327", // !=
-								"160395", // Southbound Gordon at Lakeside #NR
-								"160515", // ==
-								"160378", // != xx Eastbound Lakeside at Poplar St (Chahko Miko Mall)
-								"160351", // ==
-								"160304", // !=
-								"160281", // !=
-								"160376", // == Northbound Ward St at Baker St (Downtown Nelson)
+						"160359", // == 10th St at Kokanee (Selkirk College) <=
+								"160013", // != 11th St
+								"160339", // == Fell St at 9th St <=
+								"160338", // == 8th St at Kokanee
+								"160335", // == 8th St at Davies St
+								"160324", // != Cottonwood St at 7th St (LV Rogers Secondary School)
+								"160327", // != 5th St at Davies St
+								"160395", // Gordon at Lakeside #NR
+								"160392", // == 1st St at Anderson St
+								"160318", // != xx Nelson at Behnsen St
+								"160326", // != xx Cottonwood St at 3rd St
+								"160341", // != == Hendryx St at Mill St
+								"160301", // != Latimer St at Josephine St
+								"160014", // != Hoover at Hall
+								"160515", // == Front at Poplar
+								"160378", // != xx Lakeside at Poplar St (Chahko Miko Mall)
+								"160351", // == Hall St at Front St
+								"160304", // != Robson St at Hendryx St
+								"160281", // != Josephine St at Hoover St
+								"160376", // == Ward St at Baker St (Downtown Nelson)
 						})) //
 				.addTripSort(1, //
 						Arrays.asList(new String[] { //
-						"160376", // == Northbound Ward St at Baker St (Downtown Nelson)
-								"160358", // ==
-								"160350", // ==
-								"160378", // != xx Eastbound Lakeside at Poplar St (Chahko Miko Mall)
-								"160342", // == Northbound Front St at Poplar St
-								"160318", // != Northbound Nelson at Behnsen St
-								"160323", // != Eastbound Cottonwood St at 7th St (LV Rogers Secondary School)
-								"160391", // != Northbound 1st St at Anderson St
-								"160329", // != Eastbound Gordon St at 3rd St
-								"160336", // == Northbound 8th St at Davies St
-								"160359", // == Northbound 10th St at Kokanee (Selkirk College) =>
-								"160013", // != Eastbound 11th St (Mountain Lake Seniors Community Ltd) =>
+						"160376", // == Ward St at Baker St (Downtown Nelson)
+								"160350", // == Hall St at Front St
+								"160378", // != xx Lakeside at Poplar St (Chahko Miko Mall)
+								"160342", // == Front St at Poplar St
+								"160318", // != xx Nelson at Behnsen St
+								"160326", // != xx Cottonwood St at 3rd St
+								"160325", // != == Cottonwood St at 5th St
+								"160323", // != Cottonwood St at 7th St (LV Rogers Secondary School)
+								"160391", // != 1st St at Anderson St
+								"160329", // != Gordon St at 3rd St
+								"160336", // == 8th St at Davies St
+								"160359", // == 10th St at Kokanee (Selkirk College) =>
 						})) //
 				.compileBothTripSort());
 		map2.put(3L, new RouteTripSpec(3L, //
