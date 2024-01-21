@@ -15,7 +15,6 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 
 // https://www.bctransit.com/open-data
-// https://www.bctransit.com/data/gtfs/west-kootenay.zip
 public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools {
 
 	public static void main(@NotNull String[] args) {
@@ -39,14 +38,6 @@ public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools 
 		return "West Kootenay TS";
 	}
 
-	private static final String AGENCY_ID = "11"; // West Kootenay Transit System only
-
-	@Nullable
-	@Override
-	public String getAgencyId() {
-		return AGENCY_ID;
-	}
-
 	@NotNull
 	@Override
 	public Integer getAgencyRouteType() {
@@ -60,7 +51,12 @@ public class WestKootenayTransitSystemBusAgencyTools extends DefaultAgencyTools 
 
 	@Override
 	public boolean useRouteShortNameForRouteId() {
-		return true;
+		return false; // route ID used by GTFS RT
+	}
+
+	@Override
+	public @Nullable String getRouteIdCleanupRegex() {
+		return "\\-[A-Z]+$";
 	}
 
 	@Override
